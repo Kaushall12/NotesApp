@@ -1,23 +1,24 @@
-import mongoose from 'mongoose';
-import request from 'supertest';
-import express from 'express';
-import noteRoutes from '../routes/noteRoutes.js';
+import { jest } from '@jest/globals';
 
-// Mock the auth middleware
-jest.mock('../middleware/authMiddleware.js', () => ({
+// 1. Define mocks using unstable_mockModule for ES Modules
+jest.unstable_mockModule('../middleware/authMiddleware.js', () => ({
   protect: (req, res, next) => {
-    req.user = { _id: new mongoose.Types.ObjectId() };
+    req.user = { _id: '664c3917dc94bc6ad78e2db2' };
     next();
   }
 }));
 
-// Mock the controllers
-jest.mock('../controllers/noteController.js', () => ({
+jest.unstable_mockModule('../controllers/noteController.js', () => ({
   getNotes: (req, res) => res.status(200).json([{ _id: '1', title: 'Test Note', content: 'Test Content' }]),
   createNote: (req, res) => res.status(201).json({ _id: '2', title: 'New Note', content: 'New Content' }),
   updateNote: (req, res) => res.status(200).json({ _id: '1', title: 'Updated Note', content: 'Updated Content' }),
   deleteNote: (req, res) => res.status(200).json({ message: 'Note deleted' })
 }));
+
+// 2. Dynamically import modules so the mocks are applied correctly before loading
+const { default: noteRoutes } = await import('../routes/noteRoutes.js');
+const { default: express } = await import('express');
+const { default: request } = await import('supertest');
 
 const app = express();
 app.use(express.json());
