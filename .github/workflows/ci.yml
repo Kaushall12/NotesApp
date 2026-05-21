@@ -1,0 +1,73 @@
+name: Cloud Notes Full-Stack CI
+
+# Trigger this workflow on pushes and pull requests to the main branch
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  # Job 1: Test & Lint Frontend
+  frontend-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install Client Dependencies
+        run: |
+          cd client
+          npm ci
+
+      - name: Run ESLint
+        run: |
+          cd client
+          npm run lint
+
+      - name: Build Vite Production Package
+        run: |
+          cd client
+          npm run build
+
+  # Job 2: Test Backend
+  backend-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install Server Dependencies
+        run: |
+          cd server
+          npm ci
+
+      - name: Run Backend Unit Tests
+        run: |
+          cd server
+          npm run test
+
+  # Job 3: Verify Docker Builds
+  docker-compose-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Verify Docker Compose Build
+        run: |
+          docker compose build
