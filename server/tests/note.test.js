@@ -27,7 +27,7 @@ app.use('/api/notes', noteRoutes);
 describe('Note API Routes', () => {
   it('should GET all notes', async () => {
     const res = await request(app).get('/api/notes');
-    expect(res.statusCode).toEqual(500);
+    expect(res.statusCode).toEqual(200);
     expect(res.body.length).toBeGreaterThan(0);
   });
 
