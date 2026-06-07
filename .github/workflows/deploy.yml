@@ -20,5 +20,6 @@ jobs:
 
           script: |
             cd ~/NotesApp
-            git pull
+            git fetch origin
+            git reset --hard origin/main
             docker compose up -d --build
