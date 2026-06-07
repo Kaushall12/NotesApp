@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+
+    <!-- Cloud Gradient -->
+    <linearGradient id="cloud-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+
+    <!-- Note Page Gradient -->
+    <linearGradient id="note-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb" />
+      <stop offset="100%" stop-color="#fef3c7" />
+    </linearGradient>
+
+    <!-- Shadow filters for depth -->
+    <filter id="shadow-cloud" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+
+    <filter id="shadow-note" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="4" dy="8" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Base Circle Background -->
+  <circle cx="256" cy="256" r="240" fill="url(#bg-grad)" />
+
+  <!-- Cloud Element (Background of the central icon) -->
+  <path d="M 160 340 C 120 340 90 310 90 270 C 90 234 115 204 150 198 C 160 148 200 110 250 110 C 298 110 338 145 348 192 C 382 196 410 225 410 260 C 410 304 374 340 330 340 Z" 
+        fill="url(#cloud-grad)" 
+        filter="url(#shadow-cloud)" />
+
+  <!-- Document / Note Page (Tilted slightly to the right for dynamic look) -->
+  <g transform="translate(250, 260) rotate(6) translate(-250, -260)" filter="url(#shadow-note)">
+    <!-- Document Card -->
+    <rect x="180" y="170" width="140" height="180" rx="16" fill="url(#note-grad)" stroke="#f59e0b" stroke-width="4" />
+    
+    <!-- Top Note Lines -->
+    <line x1="210" y1="215" x2="290" y2="215" stroke="#d97706" stroke-width="6" stroke-linecap="round" />
+    <line x1="210" y1="245" x2="290" y2="245" stroke="#d97706" stroke-width="6" stroke-linecap="round" />
+    <line x1="210" y1="275" x2="290" y2="275" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round" />
+    <line x1="210" y1="305" x2="260" y2="305" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round" />
+    
+    <!-- Pen / Writing tool drawing on the page -->
+    <g transform="translate(285, 305) rotate(-35)">
+      <!-- Pencil/Pen Body -->
+      <path d="M -8 -45 L 8 -45 L 8 10 L 0 25 L -8 10 Z" fill="#3b82f6" />
+      <path d="M -8 10 L 8 10 L 0 25 Z" fill="#fed7aa" />
+      <path d="M -3 20 L 3 20 L 0 25 Z" fill="#1e293b" />
+      <!-- Eraser -->
+      <path d="M -8 -45 L 8 -45 L 8 -53 L -8 -53 Z" fill="#f43f5e" rx="2" />
+      <!-- Metallic band -->
+      <rect x="-8" y="-45" width="16" height="5" fill="#94a3b8" />
+    </g>
+  </g>
+</svg>
